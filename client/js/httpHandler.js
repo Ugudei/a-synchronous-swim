@@ -4,6 +4,31 @@
 
   //
   // TODO: build the swim command fetcher here
+
+  // const ajaxFileGET = () => {
+  //   $.ajax({
+  //     type: 'GET',
+  //     url: serverUrl,
+  //     success: (command) => {
+  //       // reload the page
+  //       SwimTeam.move(command);
+  //     }
+  //   });
+  // };
+  // setInterval(() => { ajaxFileGET() }, 300);
+
+  const fetchCommand = () => {
+    $.get({
+      url: serverUrl,
+      success: (direction) => {
+        SwimTeam.move(direction);
+      },
+      complete: () => {
+        setTimeout(fetchCommand, 50);
+      }
+    });
+  };
+  fetchCommand();
   //
 
   /////////////////////////////////////////////////////////////////////
@@ -17,7 +42,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: serverUrl,
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
@@ -27,17 +52,6 @@
       }
     });
   };
-  const ajaxFileGET = () => {
-    $.ajax({
-      type: 'GET',
-      url: serverUrl,
-      success: (command) => {
-        // reload the page
-        SwimTeam.move(command);
-      }
-    });
-  };
-  setInterval(() => { ajaxFileGET() }, 300);
 
   $('form').on('submit', function(e) {
     e.preventDefault();
