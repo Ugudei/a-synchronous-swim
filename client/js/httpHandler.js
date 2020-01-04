@@ -17,7 +17,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: serverUrl,
       cache: false,
       contentType: false,
       processData: false,
@@ -27,6 +27,17 @@
       }
     });
   };
+  const ajaxFileGET = () => {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      success: (command) => {
+        // reload the page
+        SwimTeam.move(command);
+      }
+    });
+  };
+  setInterval(() => { ajaxFileGET() }, 300);
 
   $('form').on('submit', function(e) {
     e.preventDefault();
@@ -44,6 +55,7 @@
     }
 
     ajaxFileUplaod(file);
+
   });
 
 })();
